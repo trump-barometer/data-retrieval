@@ -2,21 +2,27 @@
   "name": "data-retrieval",
   "version": "1.0.0",
   "description": "Data retrieval, scrapers etc.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon start app.js"
+    "start": "node start server.js",
+    "dev": "nodemon start server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/trump-barometer/data-retrieval.git"
   },
   "author": "",
-  "license": "GNU General Public License v3.0",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/trump-barometer/data-retrieval/issues"
   },
   "homepage": "https://github.com/trump-barometer/data-retrieval#readme",
   "devDependencies": {
     "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.9.11",
+    "twitter": "^1.7.1"
   }
 }
