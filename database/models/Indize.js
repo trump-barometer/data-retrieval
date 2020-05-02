@@ -1,6 +1,7 @@
 // ----- Required modules -----
 
 const mongoose = require('mongoose');
+const timestamp = require('mongoose-timestamp');
 
 
 // ----- Indizes Schema -----
@@ -15,6 +16,8 @@ const indizesSchema = new mongoose.Schema
         }
     }
 );
+
+indizesSchema.plugin(timestamp);
 
 
 // ------ Export Modul ------

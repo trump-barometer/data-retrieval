@@ -2,7 +2,10 @@
 
 const Twitter = require('twitter');
 
-const tweet = require('../database/tweet');
+const tweets = require('../../database/tweets');
+
+// Common Functions
+const common = require('../../common/common');
 
 
 // ----- Twitter -----
@@ -15,17 +18,15 @@ let client = new Twitter
     access_token_secret: process.env.TW_ACCESS_TOKEN_SECRET
 });
 
-client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (error, tweets, response) =>
+client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (err, receivedTweets, res) =>
 {
-    if(error)
+    if(err)
     {
-        console.log(error);
+        common.Log('Twitter API Error', err);
         return;
     }
+
+    //tweets.DeleteAll();
     
-    //Tweet.deleteMany({}).catch(err => console.log(`Database error : ${err}`));
-
-    //console.log(tweets);
-
-    tweet.Store(tweets);
+    tweets.Store(receivedTweets);
 });
