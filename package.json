@@ -23,6 +23,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.11",
+    "mongoose-timestamp": "^0.6.0",
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2",
     "twitter": "^1.7.1"
   }
 }

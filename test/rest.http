@@ -1,0 +1,11 @@
+GET http://localhost/tweets
+
+
+###
+
+GET http://localhost/tweets/1256385672174276600
+
+
+###
+
+GET http://localhost/tweet
