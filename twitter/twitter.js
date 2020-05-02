@@ -2,6 +2,8 @@
 
 const Twitter = require('twitter');
 
+const tweet = require('../database/tweet');
+
 
 // ----- Twitter -----
 
@@ -20,6 +22,10 @@ client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (error, tweets, res
         console.log(error);
         return;
     }
+    
+    //Tweet.deleteMany({}).catch(err => console.log(`Database error : ${err}`));
 
-    console.log(tweets);
+    //console.log(tweets);
+
+    tweet.Store(tweets);
 });

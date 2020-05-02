@@ -2,9 +2,10 @@
   "name": "data-retrieval",
   "version": "1.0.0",
   "description": "Data retrieval, scrapers etc.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon start app.js"
+    "start": "node start server.js",
+    "dev": "nodemon start server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "mysql2": "^2.1.0",
+    "mongoose": "^5.9.11",
     "twitter": "^1.7.1"
   }
 }
