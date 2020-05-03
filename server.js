@@ -3,7 +3,6 @@
 // Environment variables
 require('dotenv').config();
 
-const { fork } = require('child_process');
 const restify = require('restify');
 
 // MongoDb Database
@@ -42,11 +41,7 @@ db.once('open', () =>
 });
 
 
-// ----- FORKS -----
+// ----- Timers -----
 
-// Run Twitter fork
-// fork('./apis/twitter/twitter.js');
+// Start Twitter timer
 require('./apis/twitter/twitter');
-
-// Run Indizes fork
-//fork('./twitter/twitter.js');

@@ -21,12 +21,7 @@ function Store(tweets)
                 // Tweet doesnt't exist in database
                 if (!tw)
                 {
-                    tw = new Tweet
-                    (
-                        {
-                            tweet
-                        }
-                    );
+                    tw = new Tweet({ tweet });
 
                     tw.save().then(t =>
                     {
@@ -36,13 +31,16 @@ function Store(tweets)
                 }
                 else
                 {
+                    tw.modifiedAt = Date.now();
+
                     tw.save().then(t =>
                     {
                         common.Log('Info', `Tweet (${t.id}) updated`);
                     })
                     .catch(err => common.Log('Database error', err));
                 }
-            });
+            })
+            .catch(err => common.Log('Database error', err));
     });
 }
 

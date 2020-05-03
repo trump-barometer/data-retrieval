@@ -1,7 +1,6 @@
 // ----- Required modules -----
 
 const mongoose = require('mongoose');
-const timestamp = require('mongoose-timestamp');
 
 
 // ----- Tweets Schema -----
@@ -13,12 +12,23 @@ const tweetsSchema = new mongoose.Schema
         {
             type: Object,
             required: true
+        },
+
+        modifiedAt:
+        {
+            type: Date,
+            default: Date.now,
+            required: true
+        },
+
+        createdAt:
+        {
+            type: Date,
+            default: Date.now,
+            required: true
         }
     }
 );
-
-tweetsSchema.plugin(timestamp);
-
 
 // ------ Export Modul ------
 

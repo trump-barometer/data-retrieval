@@ -18,15 +18,24 @@ let client = new Twitter
     access_token_secret: process.env.TW_ACCESS_TOKEN_SECRET
 });
 
-client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (err, receivedTweets, res) =>
-{
-    if(err)
-    {
-        common.Log('Twitter API Error', err);
-        return;
-    }
+GetPotusTweets();
 
-    //tweets.DeleteAll();
-    
-    tweets.Store(receivedTweets);
-});
+setInterval(GetPotusTweets, 1000 * 60 * 5);
+
+// ----- Private Funtcions -----
+
+function GetPotusTweets()
+{
+    client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (err, receivedTweets, res) =>
+    {
+        if(err)
+        {
+            common.Log('Twitter API Error', err);
+            return;
+        }
+        
+        tweets.Store(receivedTweets);
+
+        common.Log('Info', 'Tweets retrieved');
+    });
+}

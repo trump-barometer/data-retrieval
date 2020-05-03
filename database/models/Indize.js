@@ -1,7 +1,6 @@
 // ----- Required modules -----
 
 const mongoose = require('mongoose');
-const timestamp = require('mongoose-timestamp');
 
 
 // ----- Indizes Schema -----
@@ -13,11 +12,23 @@ const indizesSchema = new mongoose.Schema
         {
             type: Object,
             required: true
+        },
+
+        modifiedAt:
+        {
+            type: Date,
+            default: Date.now,
+            required: true
+        },
+
+        createdAt:
+        {
+            type: Date,
+            default: Date.now,
+            required: true
         }
     }
 );
-
-indizesSchema.plugin(timestamp);
 
 
 // ------ Export Modul ------
