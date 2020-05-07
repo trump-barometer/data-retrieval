@@ -1,5 +1,3 @@
-// ----- Required Modules -----
-
 const Indize = require('./models/Indize');
 
 
@@ -10,9 +8,18 @@ function Store(indizes)
     if (!indizes)
         return;
 
-    indizes.forEach(indize =>
+    Object.keys(indizes).forEach(key =>
     {
-        Indize.findOne({ "indize.id" : indize.id })
+        indize = indizes[key]
+        Object.keys(indize).forEach(key2 =>
+            {
+                key3 = key2.substring(3)
+                Object.defineProperty(indize, key3,
+                    Object.getOwnPropertyDescriptor(indize, key2));
+                delete indize[key2];
+            
+            })
+        Indize.findOne({})
             .then(async indi =>
             {
                 // Indize doesnt't exist in database
@@ -33,7 +40,7 @@ function Store(indizes)
                 indi.save()
                     .then(t =>
                     {
-                        console.log(`Indize saved to database : ${t.id}`);
+                        console.log(`Indize saved to database : `);
                     })
                     .catch(err => console.log(`Database error : ${err}`));
             });           
