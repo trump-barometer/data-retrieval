@@ -11,14 +11,7 @@ function Store(indizes)
     Object.keys(indizes).forEach(key =>
     {
         indize = indizes[key]
-        Object.keys(indize).forEach(key2 =>
-            {
-                key3 = key2.substring(3)
-                Object.defineProperty(indize, key3,
-                    Object.getOwnPropertyDescriptor(indize, key2));
-                delete indize[key2];
-            
-            })
+  
         Indize.findOne({})
             .then(async indi =>
             {
