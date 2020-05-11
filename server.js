@@ -46,5 +46,9 @@ db.once('open', () =>
 // Start Twitter timer
 //require('./apis/twitter/twitter');
 
-// Start Index
-require('./apis/kurse/DAX');
+// Start Index 
+//DAX und FTSE 100 (Großbritanien)
+require('./apis/kurse/AlphaVantage_API');
+
+// Dow Jones, S&P100 und Nasdaq
+require('./apis/kurse/FMPcloud_API') 

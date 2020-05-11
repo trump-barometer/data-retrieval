@@ -6,7 +6,7 @@ const indize = require('../../database/indizes');
 // Common Functions
 const common = require('../../common/common');
 
-function getindizes(symbol){
+function getindizes(symbol,indexName){
     axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_intraday&interval=60min&symbol="+symbol+"&apikey=DOEHQNU1CVASTXPD").then(responseData => { 
       timezone = responseData['data']['Meta Data']['6. Time Zone']
       indexObj = responseData["data"]["Time Series (60min)"]
@@ -14,9 +14,9 @@ function getindizes(symbol){
       Object.keys(indexObj).forEach(key => {
         var datestring = String(key)
         
-        indexObj[datestring]["6. _id"] = datestring
+        indexObj[datestring]["6. date"] = datestring
         indexObj[datestring]["7. Timezone"] = timezone
-        indexObj[datestring]["8. Index"] ="PDAX"
+        indexObj[datestring]["8. Index"] = indexName
         indexObj2 = indexObj[key]
         Object.keys(indexObj2).forEach(key2 =>
           {
@@ -36,6 +36,9 @@ indize.Store(indexObj);
 
 
   };
+  getindizes("^GDAXI","DAX")
+  getindizes("^FTSE","FTSE100")
   setTimeout(getindizes,100,'^GDAXI')
-//getindizes('^GDAXI')
+  setTimeout(getindizes,100,'^FTSE')
+
   
