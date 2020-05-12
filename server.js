@@ -44,7 +44,8 @@ db.once('open', () =>
 // ----- Timers -----
 
 // Start Twitter timer
-//require('./apis/twitter/twitter');
+require('./apis/twitter/twitter');
 
-// Start Index
-require('./apis/kurse/DAX');
+// Start Indize timers
+require('./apis/indizes/alphavantage');
+require('./apis/indizes/fmpcloud');
