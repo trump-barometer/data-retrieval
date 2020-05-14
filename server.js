@@ -36,6 +36,7 @@ db.on('error', (err) =>
 db.once('open', () =>
 { 
     require('./routes/tweets')(server);
+    require('./routes/indizes')(server);
     common.Log('Info', 'Successfully connected to database');
     common.Log('Info', `Server startet on port ${process.env.REST_PORT}`);
 });
