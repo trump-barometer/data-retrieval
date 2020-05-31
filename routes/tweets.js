@@ -30,7 +30,7 @@ module.exports = server =>
         let id = req.params.id;
 
         if (isNaN(id))
-            return next(new errors.InvalidContentError(`Given id ${id} is not number.`))
+            return next(new errors.InvalidContentError(`Given id ${id} is not a number.`))
 
         id = Number(id);
 

@@ -21,6 +21,7 @@
     "nodemon": "^2.0.3"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.11",
     "restify": "^8.5.1",

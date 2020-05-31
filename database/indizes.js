@@ -2,6 +2,9 @@
 
 const Indize = require('./models/Indize');
 
+// Common Functions
+const common = require('../common/common');
+
 
 // ----- Public Functions -----
 
@@ -12,32 +15,38 @@ function Store(indizes)
 
     indizes.forEach(indize =>
     {
-        Indize.findOne({ "indize.id" : indize.id })
+        Indize.findOne({ $and: [ { 'indize.symbol' : indize.symbol }, { 'indize.timestamp' : indize.timestamp } ] })
             .then(async indi =>
             {
                 // Indize doesnt't exist in database
                 if (!indi)
                 {
-                    indi = new Indize
-                    (
-                        {
-                            indize
-                        }
-                    );
+                    indi = new Indize({ indize });
+
+                    indi.save().then(i =>
+                    {
+                        common.Log('Info', `Indize (${i.id}) saved to database`);
+                    })
+                    .catch(err => common.Log('Database error', err));
                 }
                 else
                 {
-                    tw.modifiedDate = Date.now();
-                }   
-                
-                indi.save()
-                    .then(t =>
+                    indi.modifiedAt = Date.now();
+
+                    indi.save().then(i =>
                     {
-                        console.log(`Indize saved to database : ${t.id}`);
+                        common.Log('Info', `Indize (${i.id}) updated`);
                     })
-                    .catch(err => console.log(`Database error : ${err}`));
-            });           
+                    .catch(err => common.Log('Database error', err));
+                }
+            })
+            .catch(err => common.Log('Database error', err));       
     });
+}
+
+function DeleteAll()
+{
+    Indize.deleteMany({}).then(x => common.Log('Database',  'Deleted all documents from indize collection')).catch(err => common.Log('Database error',  err));
 }
 
 
@@ -45,5 +54,6 @@ function Store(indizes)
 
 module.exports =
 {
-    Store
+    Store,
+    DeleteAll
 };
