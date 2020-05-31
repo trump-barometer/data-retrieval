@@ -15,7 +15,7 @@ GetIndize('^GDAXI');
 
 // ----- FTSE100 -----
 
-GetIndize('^FTSE');
+//GetIndize('^FTSE'); 
 
 // setInterval(GetIndize, 1000 * 60 * 60, '^FTSE');
 

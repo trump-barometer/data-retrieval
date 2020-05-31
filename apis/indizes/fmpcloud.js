@@ -6,12 +6,17 @@ const indize = require('../../database/indizes');
 // Common Functions
 const common = require('../../common/common');
 
-
 // ----- Dow Jones Average 30 -----
 
 GetIndize('^DJI');
 
 // setInterval(GetIndize, 1000 * 60 * 60, '^DJI');
+
+// ----- Nasdaq 100 -----
+
+GetIndize('^NDX');
+
+// setInterval(GetIndize, 1000 * 60 * 60, '^NDX');
 
 // ----- S&P 500 -----
 
