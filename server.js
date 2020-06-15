@@ -42,6 +42,12 @@ db.once('open', () =>
 });
 
 
+// ----- Init Data -----
+
+// Twitter
+require('./apis/twitter/twitterHistory');
+
+
 // ----- Timers -----
 
 // Start Twitter timer
