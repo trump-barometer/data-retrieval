@@ -26,7 +26,7 @@ setInterval(GetPotusTweets, 1000 * 60 * 5);
 
 function GetPotusTweets()
 {
-    client.get('statuses/user_timeline', {screen_name: 'POTUS'}, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' }, (err, receivedTweets, res) =>
     {
         if(err)
         {

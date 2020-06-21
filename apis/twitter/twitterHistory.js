@@ -28,7 +28,7 @@ GetLatestPotusTweet();
 
 function GetLatestPotusTweet()
 {
-    client.get('statuses/user_timeline', {screen_name: 'POTUS', count: '1'}, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' , count: '1' }, (err, receivedTweets, res) =>
     {
         if(err)
         {
@@ -57,7 +57,7 @@ function GetLatestPotusTweet()
 
 function GetPotusHistoricalTweets(maxId)
 {
-    client.get('statuses/user_timeline', {screen_name: 'POTUS', exclude_replies: true, count: '200', max_id: maxId}, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended', exclude_replies: true, count: '200', max_id: maxId }, (err, receivedTweets, res) =>
     {
         if(err)
         {
