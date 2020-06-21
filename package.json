@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "convert-csv-to-json": "0.0.15",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.11",
     "restify": "^8.5.1",
