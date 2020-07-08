@@ -24,6 +24,12 @@ GetIndize('^GSPC');
 
 // setInterval(GetIndize, 1000 * 60 * 60, '^GSPC');
 
+// ----- DAX -----
+
+GetIndize('^GDAXI');
+
+// setInterval(GetIndize, 1000 * 60 * 60, '^GDAXI');
+
 
 // ----- Private Funtcions -----
 
