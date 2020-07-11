@@ -8,27 +8,27 @@ const common = require('../../common/common');
 
 // ----- Dow Jones Average 30 -----
 
-GetIndize('^DJI');
+//GetIndize('^DJI');
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^DJI');
+setInterval(GetIndize,  1000*60*60*12, '^DJI');
 
 // ----- Nasdaq 100 -----
 
-GetIndize('^NDX');
+//GetIndize('^NDX');
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^NDX');
+setInterval(GetIndize, 1000*60*60*12 , '^NDX');
 
 // ----- S&P 500 -----
 
-GetIndize('^GSPC');
+//GetIndize('^GSPC');
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^GSPC');
+setInterval(GetIndize,  1000*60*60*12, '^GSPC');
 
 // ----- DAX -----
 
-GetIndize('^GDAXI');
+//GetIndize('^GDAXI');
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^GDAXI');
+setInterval(GetIndize,  1000*60*60*12, '^GDAXI');
 
 
 // ----- Private Funtcions -----
