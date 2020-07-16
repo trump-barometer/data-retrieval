@@ -8,51 +8,52 @@ const common = require('../../common/common');
 
 // ----- Dow Jones Average 30 -----
 
-GetIndize('^DJI');
-
-// setInterval(GetIndize, 1000 * 60 * 60, '^DJI');
+GetIndize('^DJI', process.env.SC_API_KEY_ONE);
+setInterval(GetIndize, 1000 * 60 * process.env.IN_INTERVAL, '^DJI', process.env.SC_API_KEY_ONE);
 
 // ----- Nasdaq 100 -----
 
-GetIndize('^NDX');
+GetIndize('^NDX', process.env.SC_API_KEY_TWO);
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^NDX');
+setInterval(GetIndize, 1000 * 60 * process.env.IN_INTERVAL, '^NDX', process.env.SC_API_KEY_TWO);
 
 // ----- S&P 500 -----
 
-GetIndize('^GSPC');
+GetIndize('^GSPC', process.env.SC_API_KEY_THREE);
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^GSPC');
+setInterval(GetIndize, 1000 * 60 * process.env.IN_INTERVAL, '^GSPC', process.env.SC_API_KEY_THREE);
 
 // ----- DAX -----
 
-GetIndize('^GDAXI');
+GetIndize('^GDAXI', process.env.SC_API_KEY_FOUR);
 
-// setInterval(GetIndize, 1000 * 60 * 60, '^GDAXI');
+setInterval(GetIndize, 1000 * 60 * process.env.IN_INTERVAL, '^GDAXI', process.env.SC_API_KEY_FOUR);
 
 
 // ----- Private Funtcions -----
 
-function GetIndize(symbol)
+function GetIndize(symbol, apiKey)
 {
-    const avKey = process.env.SC_API_KEY;
     const interval = 1;
-    const url = `https://fmpcloud.io/api/v3/historical-chart/${interval}hour/${symbol}?apikey=${avKey}`;
+    const url = `https://fmpcloud.io/api/v3/historical-chart/${interval}hour/${symbol}?apikey=${apiKey}`;
 
     axios.get(url)
         .then(res =>
         {
             let timeInterval = '60min';
 
-            res.data.forEach(entry =>
+            if (res.data)
             {
-                entry.timestamp = entry.date;
-                entry.symbol = symbol;
-                entry.interval = timeInterval;
-                delete entry.date;
-            });
-
-            indize.Store(res.data);
+                res.data.forEach(entry =>
+                    {
+                        entry.timestamp = entry.date;
+                        entry.symbol = symbol;
+                        entry.interval = timeInterval;
+                        delete entry.date;
+                    });
+        
+                    indize.Store(res.data);
+            }
         })
         .catch(err => common.Log('Indize error', err));
 }

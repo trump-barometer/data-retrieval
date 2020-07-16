@@ -18,13 +18,14 @@ let client = new Twitter
     access_token_secret: process.env.TW_ACCESS_TOKEN_SECRET
 });
 
-GetPotusTweets();
+GetTweets();
 
-setInterval(GetPotusTweets, 1000 * 60 * 5);
+setInterval(GetTweets, 1000 * 60 * process.env.TW_INTERVAL);
+
 
 // ----- Private Funtcions -----
 
-function GetPotusTweets()
+function GetTweets()
 {
     client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' }, (err, receivedTweets, res) =>
     {

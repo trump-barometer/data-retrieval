@@ -40,7 +40,7 @@ function ImportHistoricalIndizesFromCsvFiles()
                 try
                 {
                     let series = csvToJson.fieldDelimiter(';').getJsonFromCsv(filePath);
-                    indize.Store(series.slice(0, 20));
+                    indize.Store(series);
                 }
                 catch(err)
                 {

@@ -21,14 +21,14 @@ let client = new Twitter
 const firstTweetId = 822521968465416192;
 let tweetsCount = 0;
 
-GetLatestPotusTweet();
+GetLatestTweet();
 
 
 // ----- Private Funtcions -----
 
-function GetLatestPotusTweet()
+function GetLatestTweet()
 {
-    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' , count: '1' }, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, count: '1' }, (err, receivedTweets, res) =>
     {
         if(err)
         {
@@ -46,16 +46,14 @@ function GetLatestPotusTweet()
 
         if (tweetIdString)
         {
-            let maxId = Number(tweetIdString);
-
             common.Log('Info', `Recent tweet id: ${tweetIdString}`);
 
-            GetPotusHistoricalTweets(maxId);
+            GetHistoricalTweets(tweetIdString);
         }
      });
 };
 
-function GetPotusHistoricalTweets(maxId)
+function GetHistoricalTweets(maxId)
 {
     client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended', exclude_replies: true, count: '200', max_id: maxId }, (err, receivedTweets, res) =>
     {
@@ -75,7 +73,7 @@ function GetPotusHistoricalTweets(maxId)
 
         tweets.Store(receivedTweets);
 
-        common.Log('Info', 'Tweets retrieved');
+        common.Log('Info', `Tweets retrieved (count: ${receivedTweetsLength})`);
         
         let maxTweetIdString = receivedTweets[receivedTweetsLength-1].id_str;
 
@@ -91,7 +89,11 @@ function GetPotusHistoricalTweets(maxId)
                 return;
             }
             
-            GetPotusHistoricalTweets(newMaxId);
-        }        
+            GetHistoricalTweets(newMaxId);
+        }
+        else
+        {
+            common.Log('Twitter API Error', 'Unable to parse new tweet id');
+        }
     });
 };
