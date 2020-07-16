@@ -38,22 +38,22 @@ function GetIndize(symbol, apiKey)
     const url = `https://fmpcloud.io/api/v3/historical-chart/${interval}hour/${symbol}?apikey=${apiKey}`;
 
     axios.get(url)
-        .then(res =>
-        {
-            let timeInterval = '60min';
+    .then(res =>
+    {
+        let timeInterval = '60min';
 
-            if (res.data)
-            {
-                res.data.forEach(entry =>
-                    {
-                        entry.timestamp = entry.date;
-                        entry.symbol = symbol;
-                        entry.interval = timeInterval;
-                        delete entry.date;
-                    });
-        
-                    indize.Store(res.data);
-            }
-        })
-        .catch(err => common.Log('Indize error', err));
+        if (res.data)
+        {
+            res.data.forEach(entry =>
+                {
+                    entry.timestamp = entry.date;
+                    entry.symbol = symbol;
+                    entry.interval = timeInterval;
+                    delete entry.date;
+                });
+    
+                indize.Store(res.data);
+        }
+    })
+    .catch(err => common.Log('Indize error', err));
 }
