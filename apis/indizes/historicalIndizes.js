@@ -22,7 +22,7 @@ function ImportHistoricalIndizesFromCsvFiles()
 {
     const directoryPath = path.join(__dirname, `../../${directoryName}`);
 
-    fs.readdir(directoryPath, (err, files) =>
+    fs.readdir(directoryPath, async (err, files) =>
     {
         if (err)
         {
@@ -31,7 +31,7 @@ function ImportHistoricalIndizesFromCsvFiles()
 
         if (files)
         {
-            files.forEach((file) =>
+            for(let file of files)
             {
                 common.Log('Reading indizes from file', file);
 
@@ -40,13 +40,15 @@ function ImportHistoricalIndizesFromCsvFiles()
                 try
                 {
                     let series = csvToJson.fieldDelimiter(';').getJsonFromCsv(filePath);
-                    indize.Store(series);
+                    await indize.Store(series);
+
+                    common.Log('Indize info', `Saved ${series.length} historical indizes to database`);
                 }
                 catch(err)
                 {
                     common.Log('Indize error', err);
                 }
-            });
+            }
         }
         else
             common.Log('Info', `No historical indize files found in diretory \'${directoryPath}\'`);

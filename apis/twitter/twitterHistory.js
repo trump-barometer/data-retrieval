@@ -18,7 +18,6 @@ let client = new Twitter
     access_token_secret: process.env.TW_ACCESS_TOKEN_SECRET
 });
 
-const firstTweetId = 822521968465416192;
 let tweetsCount = 0;
 
 GetLatestTweet();
@@ -55,7 +54,7 @@ function GetLatestTweet()
 
 function GetHistoricalTweets(maxId)
 {
-    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended', exclude_replies: true, count: '200', max_id: maxId }, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended', exclude_replies: true, count: '200', max_id: String(maxId) }, async (err, receivedTweets, res) =>
     {
         if(err)
         {
@@ -71,7 +70,7 @@ function GetHistoricalTweets(maxId)
             return;
         }
 
-        tweets.Store(receivedTweets);
+        await tweets.Store(receivedTweets);
 
         common.Log('Info', `Tweets retrieved (count: ${receivedTweetsLength})`);
         
@@ -83,12 +82,6 @@ function GetHistoricalTweets(maxId)
 
             tweetsCount += receivedTweetsLength;
 
-            if(firstTweetId >= newMaxId)
-            {
-                common.Log('Info', `Received tweets: ${tweetsCount}`);
-                return;
-            }
-            
             GetHistoricalTweets(newMaxId);
         }
         else

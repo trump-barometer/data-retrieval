@@ -8,40 +8,44 @@ const common = require('../common/common');
 
 // ----- Public Functions -----
 
-function Store(tweets)
+async function Store(tweets)
 {
     if (!tweets)
         return;
 
-    tweets.forEach(tweet =>
+    for(let tweet of tweets)
     {
-        Tweet.findOne({ "tweet.id" : tweet.id })
-            .then(async tw =>
+        try
+        {
+            let tw = await Tweet.findOne({ "tweet.id" : tweet.id });
+
+            // Tweet doesnt't exist in database
+            if (!tw)
             {
-                // Tweet doesnt't exist in database
-                if (!tw)
-                {
-                    tw = new Tweet({ tweet });
+                tw = new Tweet({ tweet });
 
-                    tw.save().then(t =>
-                    {
-                        common.Log('Info', `Tweet (${t.id}) saved to database`);
-                    })
-                    .catch(err => common.Log('Database error', err));
-                }
-                else
+                await tw.save(function(err, t)
                 {
-                    tw.modifiedAt = Date.now();
+                    if (err)
+                        throw err;
+                });
+            }
+            else
+            {
+                tw.modifiedAt = Date.now();
 
-                    tw.save().then(t =>
-                    {
-                        common.Log('Info', `Tweet (${t.id}) updated`);
-                    })
-                    .catch(err => common.Log('Database error', err));
-                }
-            })
-            .catch(err => common.Log('Database error', err));
-    });
+                await tw.save(function(err, t)
+                {
+                    if (err)
+                        throw err;
+                });
+            }
+        }
+        catch(err)
+        {
+            common.Log('Database error', err);
+        }
+    }
 }
 
 function DeleteAll()

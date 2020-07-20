@@ -8,40 +8,44 @@ const common = require('../common/common');
 
 // ----- Public Functions -----
 
-function Store(indizes)
+async function Store(indizes)
 {
     if (!indizes)
         return;
 
-    indizes.forEach(indize =>
+    for(let indize of indizes)
     {
-        Indize.findOne({ $and: [ { 'indize.symbol' : indize.symbol }, { 'indize.timestamp' : indize.timestamp } ] })
-            .then(async indi =>
+        try
+        {
+           let indi = await Indize.findOne({ $and: [ { 'indize.symbol' : indize.symbol }, { 'indize.timestamp' : indize.timestamp } ] });
+        
+            // Indize doesnt't exist in database
+            if (!indi)
             {
-                // Indize doesnt't exist in database
-                if (!indi)
-                {
-                    indi = new Indize({ indize });
+                indi = new Indize({ indize });
 
-                    indi.save().then(i =>
-                    {
-                        common.Log('Info', `Indize (${i.id}) saved to database`);
-                    })
-                    .catch(err => common.Log('Database error', err));
-                }
-                else
+                await indi.save(function(err, i)
                 {
-                    indi.modifiedAt = Date.now();
+                    if (err)
+                        throw err;
+                });
+            }
+            else
+            {
+                indi.modifiedAt = Date.now();
 
-                    indi.save().then(i =>
-                    {
-                        common.Log('Info', `Indize (${i.id}) updated`);
-                    })
-                    .catch(err => common.Log('Database error', err));
-                }
-            })
-            .catch(err => common.Log('Database error', err));       
-    });
+                await indi.save(function(err, i)
+                {
+                    if (err)
+                        throw err;
+                });
+            }
+        }
+        catch(err)
+        {
+            common.Log('Database error', err);
+        }
+    }
 }
 
 function DeleteAll()

@@ -27,16 +27,33 @@ setInterval(GetTweets, 1000 * 60 * process.env.TW_INTERVAL);
 
 function GetTweets()
 {
-    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' }, (err, receivedTweets, res) =>
+    client.get('statuses/user_timeline', { screen_name: process.env.TW_ACCOUNT_NAME, tweet_mode: 'extended' }, async (err, receivedTweets, res) =>
     {
         if(err)
         {
             common.Log('Twitter API Error', err);
             return;
         }
-        
-        tweets.Store(receivedTweets);
 
-        common.Log('Info', 'Tweets retrieved');
+        receivedTweets.forEach(entry =>
+        {
+            entry.created_at = ConvertTwitterTimestamp(entry.created_at).toUTCString();
+        });
+        
+        await tweets.Store(receivedTweets);
+
+        common.Log('Info', `${receivedTweets.length} Tweets retrieved`);
     });
+}
+
+function ConvertTwitterTimestamp(datestring)
+{
+    var year = datestring.substring(datestring.length, datestring.length-4);
+    var day = datestring.substring(datestring.length-20, datestring.length-22);
+    var month = datestring.substring(datestring.length-23, datestring.length-26);
+    var sec = datestring.substring(datestring.length-11, datestring.length-13);
+    var min = datestring.substring(datestring.length-14, datestring.length-16);
+    var hr = datestring.substring(datestring.length-17, datestring.length-19);
+    var date = new Date(Date.parse(day + ' ' + month + ' ' + year + ' ' + hr + ':' + min + ':' + sec + ' GMT'));
+    return date;
 }
