@@ -39,7 +39,7 @@ function GetIndize(symbol, apiKey)
     const url = `https://fmpcloud.io/api/v3/historical-chart/${interval}hour/${symbol}?apikey=${apiKey}`;
 
     axios.get(url)
-        .then(res =>
+        .then(async res =>
         {
             if (res.data)
             {
@@ -50,7 +50,9 @@ function GetIndize(symbol, apiKey)
                     delete entry.date;
                 });
         
-                indize.Store(res.data);
+                await indize.Store(res.data);
+
+                common.Log('Info', `${res.data.length} indizes of ${symbol} retrieved`);
             }
         })
         .catch(err => common.Log('Indize error', err));
