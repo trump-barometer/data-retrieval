@@ -40,6 +40,12 @@ function ImportHistoricalIndizesFromCsvFiles()
                 try
                 {
                     let series = csvToJson.fieldDelimiter(';').getJsonFromCsv(filePath);
+
+                    series.forEach(entry =>
+                    {
+                        entry.timestamp = common.ConvertIndexTimestamp(entry.symbol, entry.timestamp).toUTCString();
+                    });
+
                     await indize.Store(series);
 
                     common.Log('Indize info', `Saved ${series.length} historical indizes to database`);
