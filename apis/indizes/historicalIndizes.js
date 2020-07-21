@@ -35,7 +35,7 @@ function ImportHistoricalIndizesFromCsvFiles()
             {
                 common.Log('Reading indizes from file', file);
 
-                const filePath = `${directoryPath}\\${file}`;
+                const filePath = `${directoryPath}${path.sep}${file}`;
 
                 try
                 {
