@@ -70,6 +70,11 @@ function GetHistoricalTweets(maxId)
             return;
         }
 
+        receivedTweets.forEach(entry =>
+        {
+            entry.created_at = common.ConvertTwitterTimestamp(entry.created_at).toUTCString();
+        });
+
         await tweets.Store(receivedTweets);
 
         common.Log('Info', `Tweets retrieved (count: ${receivedTweetsLength})`);

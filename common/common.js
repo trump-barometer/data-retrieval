@@ -206,11 +206,24 @@ function ConvertIndexTimestamp(index, timestamp)
     return null;
 }
 
+function ConvertTwitterTimestamp(datestring)
+{
+    var year = datestring.substring(datestring.length, datestring.length-4);
+    var day = datestring.substring(datestring.length-20, datestring.length-22);
+    var month = datestring.substring(datestring.length-23, datestring.length-26);
+    var sec = datestring.substring(datestring.length-11, datestring.length-13);
+    var min = datestring.substring(datestring.length-14, datestring.length-16);
+    var hr = datestring.substring(datestring.length-17, datestring.length-19);
+    var date = new Date(Date.parse(day + ' ' + month + ' ' + year + ' ' + hr + ':' + min + ':' + sec + ' GMT'));
+    return date;
+}
+
 
 // ----- Module Exports -----
 
 module.exports =
 {
     Log,
-    ConvertIndexTimestamp
+    ConvertIndexTimestamp,
+    ConvertTwitterTimestamp
 };
