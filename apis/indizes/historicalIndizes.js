@@ -11,7 +11,7 @@ const indize = require('../../database/indizes');
 const common = require('../../common/common');
 
 // Directory path to csv files
-const directoryName = 'historicalIndizes';
+const directoryName = 'historicalData';
 
 
 ImportHistoricalIndizesFromCsvFiles()
