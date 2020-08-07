@@ -46,7 +46,7 @@ function GetIndize(symbol, apiKey)
                 res.data.forEach(entry =>
                 {
                     entry.timestamp = common.ConvertIndexTimestamp(symbol, entry.date).toUTCString();
-                    entry.timestamp_date = new Date(common.ConvertIndexTimestamp(symbol, entry.date).toISOString());
+                    entry.timestamp_date = new Date(common.ConvertIndexTimestamp(symbol, entry.date).toISOString);
                     entry.symbol = symbol;
                     delete entry.date;
                 });
