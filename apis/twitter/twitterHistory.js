@@ -91,8 +91,9 @@ function GetHistoricalTweets(maxId)
 
         receivedTweets.forEach(entry =>
         {
-            entry.created_at = common.ConvertTwitterTimestamp(entry.created_at).toUTCString();
-            entry.created_at_date = new Date(common.ConvertTwitterTimestamp(entry.created_at).toISOString);
+            var ts = common.ConvertTwitterTimestamp(entry.created_at);
+            entry.created_at = ts.toUTCString();
+            entry.created_at_date = new Date(ts.toISOString());
         });
 
         await tweets.Store(receivedTweets);

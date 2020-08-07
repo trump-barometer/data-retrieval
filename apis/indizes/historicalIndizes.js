@@ -43,8 +43,9 @@ function ImportHistoricalIndizesFromCsvFiles()
 
                     series.forEach(entry =>
                     {
-                        entry.timestamp = common.ConvertIndexTimestamp(entry.symbol, entry.timestamp).toUTCString();
-                        entry.timestamp_date = new Date(common.ConvertIndexTimestamp(entry.symbol, entry.timestamp).toISOString);
+                        var ts = common.ConvertIndexTimestamp(entry.symbol, entry.timestamp);
+                        entry.timestamp = ts.toUTCString();
+                        entry.timestamp_date = new Date(ts.toISOString());
                     });
 
                     await indize.Store(series);
