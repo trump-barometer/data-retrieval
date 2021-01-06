@@ -21,7 +21,7 @@
     "nodemon": "^2.0.3"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "convert-csv-to-json": "0.0.15",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.11",
